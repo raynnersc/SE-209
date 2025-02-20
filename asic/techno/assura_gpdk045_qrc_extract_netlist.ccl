@@ -1,0 +1,69 @@
+#----------------------------------------------------------------------------
+# TPT : Template file for Quantus QRC netlist extraction post lvs
+#----------------------------------------------------------------------------
+# variables have to be replaced using tools like sed, awk...
+# LIBNAME : name of the Cadence DFII openaccess library containing the bloc
+# MODULE  : name of the bloc in the library
+# PDKITROOT: directory of the design kit
+
+capacitance \
+	 -decoupling_factor 1.0 \
+	 -ground_net "VSS!"
+device_reduction \
+	 -m_factor "infinite"
+extract \
+	 -selection "all" \
+	 -type "rc_coupled"
+extraction_setup \
+	 -array_vias_spacing auto \
+	 -max_fracture_length infinite \
+	 -max_fracture_length_unit "MICRONS" \
+	 -macro_cells_type "default"  \
+	 -max_via_array_size "auto" \
+	 -net_name_space "SCHEMATIC"
+filter_cap \
+	 -exclude_self_cap true
+filter_coupling_cap \
+	 -coupling_cap_threshold_absolute 0.01 \
+	 -coupling_cap_threshold_relative 0.001
+filter_res \
+	 -merge_parallel_res false \
+	 -min_res 0.001
+parasitic_reduction \
+    -enable_reduction true
+input_db -type assura \
+	 -design_cell_name "MODULE layout LIBNAME" \
+	 -run_name "LVS" \
+	 -directory_name "./batch_LVS" \
+	 -format "DFII" \
+	 -hierarchy_delimiter ":"
+mos_diffusion_parameter_extraction \
+	 -res "fast" \
+	 -auto_accuracy_downgrade false
+output_db -type spice \
+	 -device_finger_delimiter "@" \
+	 -hierarchy_delimiter "/" \
+	 -include_cap_model "false" \
+	 -include_parasitic_cap_model "false" \
+	 -include_res_model "false" \
+	 -include_parasitic_res_model "false" \
+	 -sub_node_char "#"
+output_setup \
+     -directory_name "./batch_LVS" \
+	 -file_name "../results/MODULE.sp" \
+	 -net_name_space "SCHEMATIC" \
+	 -temporary_directory_name "QRC"
+process_technology \
+	 -technology_corner \
+		"rcx_worst" \
+	 -technology_library_file "PDKITROOT/assura_tech.lib" \
+	 -technology_name "gpdk045_av" \
+	 -temperature \
+		25.0
+      
+#      -output_xy  \
+#            "CANONICAL_RES" \
+#            "PARASITIC_RES" \
+#            "CANONICAL_CAP" \
+#            "PARASITIC_CAP" \
+#            "MOS" \

@@ -1,0 +1,18 @@
+;----------------------------------------------------------------------------
+; TPT : Template file for the LVS using assura
+;       Bottom part
+;----------------------------------------------------------------------------
+
+avCompareRules(
+     listXRef()
+)
+
+avCompareRules(
+schematic(
+netlist( dfII "./batch_LVS/batch_LVS.vlr" )
+)
+)
+
+avLVS()
+
+

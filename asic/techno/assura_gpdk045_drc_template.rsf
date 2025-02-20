@@ -1,0 +1,21 @@
+;---------------------------------------------------------------------------------------
+; TPT : Template for a simple design rule check of a bloc using assura in batch mode
+;---------------------------------------------------------------------------------------
+; variables have to be replaced using tools like sed, awk...
+; LIBNAME : name of the Cadence DFII openaccess library containing the bloc
+; MODULE  : name of the bloc in the library
+; PDKITROOT: directory of the design kit
+avParameters(
+  ?inputLayout ( "df2" "LIBNAME" )
+  ?cellName "MODULE"
+  ?viewName "layout"
+  ?runName "DRC"
+  ?workingDirectory "./batch_DRC"
+  ?technology "gpdk045_av"
+  ?techLib "PDKITROOT/assura_tech.lib"
+  ?avrpt t
+  ?dbuPerUU 2000.0
+  ?flagNon45 t
+  ?flagOffGrid (0.005 1.0)
+  ?joinPins top
+)

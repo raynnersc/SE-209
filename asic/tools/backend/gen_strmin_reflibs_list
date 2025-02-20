@@ -1,0 +1,10 @@
+#!/usr/bin/tclsh
+# Get global variables from shell environment
+set virtuoso_ref_libs $env(virtuoso_ref_libs)
+
+set fp [open "strmin_reflibs_list" w]
+foreach fich ${virtuoso_ref_libs} {
+  puts $fp $fich
+}
+close $fp
+exit 0

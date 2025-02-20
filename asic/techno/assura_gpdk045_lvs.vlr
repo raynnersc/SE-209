@@ -1,0 +1,17 @@
+;----------------------------------------------------------------------------
+; TPT : Template file for the LVS using assura
+;       Creation of netlist from schematic
+;----------------------------------------------------------------------------
+; variables have to be replaced using tools like sed, awk...
+; LIBNAME : name of the Cadence DFII openaccess library containing the bloc
+; MODULE  : name of the bloc in the library
+; PDKITROOT: directory of the design kit
+avSimName = "auLvs"
+avDisableWildcardPG = nil
+avVerilogBusMapIEEE = t
+avLibName  = "LIBNAME"
+avCellName = "MODULE"
+avViewName = "schematic"
+avViewList = "auLvs schematic symbol"
+avStopList = "auLvs"
+avVldbFile = "./batch_LVS/LVS.sdb"

@@ -1,0 +1,34 @@
+;----------------------------------------------------------------------------
+; TPT : Template file for the LVS using assura
+;       Top part
+;----------------------------------------------------------------------------
+; variables have to be replaced using tools like sed, awk...
+; LIBNAME : name of the Cadence DFII openaccess library containing the bloc
+; MODULE  : name of the bloc in the library
+; PDKITROOT: directory of the design kit
+
+avCompareRules(
+
+  bind( net("*[*]" "*<*>") )
+
+  mergeSplitGate( sameOrder )
+  autoPinSwap(t 3000)
+  expandOnError((pins t) (swap t) (reduce t) (swapThres t))
+)
+
+avParameters(
+  ?inputLayout ( "df2" "LIBNAME" )
+  ?cellName "MODULE"
+  ?viewName "layout"
+  ?runName "LVS"
+  ?workingDirectory "./batch_LVS"
+  ?technology "gpdk045_av"
+  ?techLib "PDKITROOT/assura_tech.lib"
+  ?avrpt t
+  ?dbuPerUU 2000.0
+  ?joinPins top
+  ?overwrite t
+  ?textLevel ( 0:0 )
+  ?textPriOnly t
+  ?userUnits "micron"
+)
